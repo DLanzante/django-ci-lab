@@ -1,6 +1,8 @@
-# Project Title
+# Django Continuous Integration Lab Walkthrough
 
-Brief description of your project. What does it do? Why did you create it?
+The author will be importing a simplified Dog API that has already been dockerized.
+
+We will be then shwoing how we can integrate a CI pipeline into github to track changes and then we will break it!
 
 ## Table of Contents
 
