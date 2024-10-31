@@ -35,7 +35,7 @@ We will be then shwoing how we can integrate a CI pipeline into github to track 
    
 4. We can now view the app through
    ```bash
-   localhost:(your_port_here)
+   localhost:(your_port_here_usually_8000)
    
 5. Open up the whole project folder into and IDE and then write some test cases in the following path (webservices/dogapi/tests.py)
    ```bash
@@ -77,5 +77,19 @@ We will be then shwoing how we can integrate a CI pipeline into github to track 
 6. Run the test cases to see if your individual test cases do in fact work
    ```bash
    docker compose run web python manage.py test
-7. 
-8. 
+   
+7. Create a new directory and make and directory in that parent directory named workflows like so.....
+   ```bash
+   mkdir .github | cd .github | mkdir workflows
+   
+9. The above command is not ran at once it is ran seperately seperated by the pipe to signify the different commands. The below command is the same above just ran on one line
+   ```bash
+   mkdir -p .github/workflows
+   
+10. Create a new CI file or (ci.yml) file in the .github/workflows/ directory.
+   ```bash
+   mkdir -p .github/workflows
+
+11. 
+12. 
+13. 
