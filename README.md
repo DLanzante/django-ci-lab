@@ -87,9 +87,71 @@ We will be then shwoing how we can integrate a CI pipeline into github to track 
    mkdir -p .github/workflows
    
 10. Create a new CI file or (ci.yml) file in the .github/workflows/ directory.
-   ```bash
-   mkdir -p .github/workflows
+    ```bash
+    # .github/workflows/ci.yml
 
-11. 
-12. 
-13. 
+      name: CI
+
+      on:
+        push:
+          branches: [ main ]
+        pull_request:
+          branches: [ main ]
+
+      jobs:
+        test:
+          runs-on: ubuntu-latest
+
+          steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+
+          - name: Check Docker version
+            run: docker version
+      
+          - name: Build Docker Image
+            run: docker compose up -d --build
+
+          - name: Run Migrations
+            run: docker compose exec web python manage.py migrate
+
+          - name: Run Tests
+            run: docker compose exec web python manage.py test
+
+          - name: Shut down services
+            run: docker compose down
+
+11. Save the file and before you do anything else just make sure that github is authorized to use personal access tokens and that you go into specific developer settings inside github to create/generate a new personal access token. Go to github developer settings > Personal Access Tokens > Click generate new token and make sure that you select all boxes!
+
+12. Lets test it out on github by making a new commit and pushing our repository.....
+    ```bash
+    git add -A
+    git commit -m "show that you have created the CI workflow necessary"
+    git push
+
+13. Now go to github, click on the repository you forked, click on actions tab, click on the test job button to view the details.
+14. You should see everything complete successfully and eventually create a green checkmark next to the tests.
+15. Let's make it fail!
+
+16. Open webservices/dogapi/tests.py and add the following to the bottom of the file
+    ```bash
+    def test_fail_on_purpose(self):
+        """This test is designed to fail."""
+        self.assertEqual(1, 0, "Intentional failure to test CI pipeline")
+    
+17. Test Step 6 again with the following:
+    ```bash
+    docker compose run web python manage.py test
+    
+18. Finally lets test and see what the following commands do for us now?
+    ```bash
+    git add -A
+    git commit -m "added an auto-failing test"
+    git push
+    
+19. Finally what do we see when we go to the Actions tab now?
+20. What can we do to better secure this and make the automation process more secure?
+
+## Thank You!
+
+Thank you for taking the time to read this documentation! If you have any questions or need further assistance, please feel free to reach out. I'm here to help!
